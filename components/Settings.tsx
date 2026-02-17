@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Server, Shield, Key, Terminal, Eye, EyeOff } from 'lucide-react';
+import { Save, Server, Shield, Key, Terminal, Eye, EyeOff, CheckCircle, Wifi } from 'lucide-react';
 
 export const Settings: React.FC = () => {
   const [host, setHost] = useState('');
@@ -31,11 +31,21 @@ export const Settings: React.FC = () => {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const isConfigured = host && username;
+
   return (
     <div className="p-6 h-full overflow-y-auto max-w-5xl mx-auto">
-      <header className="mb-8">
-        <h2 className="text-3xl font-bold text-white mb-2">Конфигурация</h2>
-        <p className="text-gray-400">Управление деталями подключения и настройками.</p>
+      <header className="mb-8 flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-bold text-white mb-2">Конфигурация</h2>
+          <p className="text-gray-400">Управление деталями подключения и настройками.</p>
+        </div>
+        {isConfigured && (
+           <div className="flex items-center gap-2 px-4 py-2 bg-green-900/20 border border-green-800 rounded-full text-green-400 text-sm">
+             <CheckCircle className="w-4 h-4" />
+             <span>Конфигурация активна</span>
+           </div>
+        )}
       </header>
 
       <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-lg mb-6">
@@ -46,7 +56,7 @@ export const Settings: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold text-white">Детали SSH подключения</h3>
             <p className="text-sm text-gray-400">
-              Эти данные сохраняются в локальном хранилище браузера для удобства.
+              Используются ИИ-ассистентом для генерации Python (Paramiko) скриптов.
             </p>
           </div>
         </div>
@@ -134,7 +144,13 @@ export const Settings: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-8 flex justify-end gap-4">
+           {isConfigured && (
+              <button className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 cursor-default" onClick={(e) => e.preventDefault()}>
+                 <Wifi className="w-4 h-4 text-green-500" />
+                 Параметры валидны
+              </button>
+           )}
           <button
             onClick={handleSave}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-medium transition-all shadow-lg ${

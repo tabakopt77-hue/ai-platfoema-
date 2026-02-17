@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NexusOps Dashboard</title>
+    <title>NexusOps Agent Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -21,10 +21,14 @@
                 700: '#374151',
                 600: '#4b5563',
               },
-              primary: {
-                500: '#3b82f6',
-                600: '#2563eb',
+              zinc: {
+                850: '#1f1f22',
+                900: '#18181b',
+                950: '#09090b',
               }
+            },
+            animation: {
+              'spin-slow': 'ColorBlobs_spin 8s linear infinite',
             }
           },
         },
@@ -32,23 +36,61 @@
     </script>
     <style>
       body {
-        background-color: #0f172a;
+        background-color: #000000;
         color: #e2e8f0;
+        overflow: hidden; /* Prevent scroll on body level due to blobs */
       }
-      /* Custom Scrollbar */
+      /* Minimax-style Scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e293b; 
+        background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #475569; 
-        border-radius: 4px;
+        background: #3f3f46; 
+        border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #64748b; 
+        background: #52525b; 
+      }
+
+      /* Custom Background Effects from Request */
+      @keyframes ColorBlobs_spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      #content-wrapper {
+        position: absolute;
+        opacity: 0.7;
+        filter: blur(100px);
+        top: 0%;
+        left: 20%;
+        width: 75vw;
+        height: 40vw;
+        border-radius: 100%;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+      }
+
+      #bg-ball {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 100vw;
+        animation: ColorBlobs_spin 20s linear infinite;
+        background: conic-gradient(from 0deg, #1e1b4b, #312e81, #0f172a, #1e1b4b);
+        /* Adjusted colors slightly to be visible on black: Indigo/Slate mix */
+        opacity: 0.6;
+      }
+      
+      .text-pretty {
+        white-space: pre-wrap;
       }
     </style>
   <script type="importmap">
